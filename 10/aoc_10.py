@@ -19,7 +19,7 @@ class Coord:
 @dataclass
 class Location:
     height: int
-    _topography: "Topography" = None
+    _topography: "Topography"
 
     def __repr__(self):
         return f"Location({self.coord}, {self.height})"
@@ -35,7 +35,7 @@ class Location:
         # This will only happen if the Location is not in Topography
         return None
 
-    def adjacent_locations(self):
+    def adjacent_locations(self) -> list["Location"]:
         x = self.coord.x
         y = self.coord.y
         adjacent_coords = [Coord(x-1, y), Coord(x+1, y), Coord(x, y-1), Coord(x, y+1)]
@@ -45,13 +45,13 @@ class Location:
             if self._topography.get_location(coord) is not None
         ]
 
-    def is_height(self, h):
+    def is_height(self, h: int) -> bool:
         # return True if height == h
         if self.height == h:
             return True
         return False
 
-    def ways_up(self):
+    def ways_up(self) -> list["Location"]:
         route = []
         for adj in self.adjacent_locations():
             if adj.is_height(self.height+1):
@@ -64,7 +64,7 @@ class Topography:
         self._locations = {}
         self._dimensions = Coord(0, 0)
 
-    def add_location(self, coord: Coord, height: int):
+    def add_location(self, coord: Coord, height: int) -> None:
         location = Location(height=height, _topography=self)
         self._locations[coord] = location
         # lots of plus ones
@@ -87,10 +87,10 @@ class Topography:
     def locations(self):
         return [(coord, loc) for coord, loc in self._locations.items()]
 
-    def get_location(self, coord: Coord):
+    def get_location(self, coord: Coord) -> Location:
         return self._locations.get(coord, None)
 
-    def get_trailheads(self):
+    def get_trailheads(self) -> list[Location]:
         trailheads = []
         for c, l in self._locations.items():
             if l.is_height(0):
@@ -98,7 +98,7 @@ class Topography:
         return trailheads
 
 
-def walk(locations: list[Location]):
+def walk(locations: list[Location]) -> list[Location]:
     return_list = []
     for loc in locations:
         if loc.height == 9:
