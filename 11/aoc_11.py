@@ -1,7 +1,7 @@
 from collections import Counter
 
 
-def rule(c: Counter):
+def blink(c: Counter):
     new_counter = Counter()
 
     # I am sure this could have been written more succinctly
@@ -34,10 +34,10 @@ if __name__ == "__main__":
 
     c = Counter(puzzle_input)
     for _ in range(25):
-        c = rule(c)
+        c = blink(c)
     print(f"Part 1: {sum(c.values())}")
 
     # And another 50 more times to make it up to 75
     for _ in range(50):
-        c = rule(c)
+        c = blink(c)
     print(f"Part 2: {sum(c.values())}")
