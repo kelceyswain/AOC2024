@@ -69,7 +69,7 @@ class Computer:
 
 
 if __name__ == "__main__":
-    with open("test.txt") as puzzle_file:
+    with open("puzzle.txt") as puzzle_file:
         puzzle_input = puzzle_file.read()
     pat_reg = re.compile(r"Register [ABC]: (\d+)")
     pat_prog = re.compile(r"Program: (.*)")
@@ -78,3 +78,13 @@ if __name__ == "__main__":
     c = Computer(program, reg_A, reg_B, reg_C)
     c.run()
     print(f"Part 1: {c.output}")
+    i = 0o45323051332600000
+
+    while True:
+        c = Computer(program, i, reg_B, reg_C)
+        c.run()
+        print(int(i), c.output)
+        if c.output == program:
+            print(int(i))
+            break
+        i += 1
